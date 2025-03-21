@@ -1,1 +1,1 @@
-export type Otional<T> = T | null;
+export type Optional<T> = T | null;
