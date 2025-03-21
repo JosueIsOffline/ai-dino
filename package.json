@@ -1,0 +1,42 @@
+{
+  "name": "ai-dino",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "gulp build --prod",
+    "dev": "gulp dev --dev",
+    "start": "gulp dev --prod",
+    "lint": "eslint ./src/scripts/**/*.ts"
+  },
+  "keywords": [],
+  "author": "JosueIsOffline",
+  "license": "ISC",
+  "dependencies": {
+    "del": "^8.0.0",
+    "esbuild": "^0.25.0",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "^9.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-ejs": "^5.1.0",
+    "gulp-esbuild": "^0.14.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^6.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "mathjs": "^14.2.1",
+    "sass": "^1.85.0",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
+    "browser-sync": "^3.0.3",
+    "eslint": "^9.21.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.2"
+  },
+  "description": ""
+}
