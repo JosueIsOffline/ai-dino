@@ -1,0 +1,1 @@
+export type Otional<T> = T | null;
