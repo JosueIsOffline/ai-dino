@@ -273,7 +273,7 @@ CanvasRenderingContext2D.prototype.drawSprite = function (
     height = undefined
 ) {
     this.drawImage(
-        SpriteSheet,
+        SpriteSheet.source,
         sprite.x,
         sprite.y,
         sprite.width,
@@ -337,3 +337,4 @@ Promise.delay = function (amount) {
     });
 }
 
+export {}
