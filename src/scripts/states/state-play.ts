@@ -3,7 +3,7 @@ import { AState } from "../types/state"
 import { Log } from "../utils/log"
 import { Cursor } from "../utils/cursor"
 import { CursorType } from "../types/cursor-type"
-// import { Dinosaur } from "../models/dinosaur"
+import { Dinosaur } from "../models/dinosaur"
 import { Ground } from "../models/ground"
 import { Theme } from "../utils/theme"
 import { FONT_FAMILY, FONT_SIZE, GOD_MODE, MARGIN, MOBILE_SPEED_FACTOR, SCORE_INTERVAL } from "../constants"
@@ -13,7 +13,7 @@ import { TextAlign } from "../types/text-align"
 
 export class StatePlay extends AState {
     public ground: Ground;
-    // public dino: Dinosaur;
+    public dino: Dinosaur;
 
 
     private scoreTimer = 0
@@ -59,7 +59,7 @@ export class StatePlay extends AState {
         this.rawScore = 0;
         this.rawSpeed = 0;
 
-        //this.dino = new COMDinosaur(this)
+        this.dino = new Dinosaur(this)
         this.ground = new Ground(this)
 
         if(!DEBUG) Cursor.set(CursorType.Hidden)
@@ -95,6 +95,7 @@ export class StatePlay extends AState {
         this.updateScore(deltaTime)
         this.updateSpeed(deltaTime)
         this.ground.update(deltaTime)
+        this.dino.update(deltaTime)
 
 
         this.invalidate()
@@ -103,6 +104,7 @@ export class StatePlay extends AState {
     render(ctx: CanvasRenderingContext2D): void {
         // TODO: Implement render components
         this.ground.render(ctx)
+        this.dino.render(ctx)
 
         // Score
         ctx.font = `${FONT_SIZE / 3}pt ${FONT_FAMILY}`;
@@ -111,6 +113,6 @@ export class StatePlay extends AState {
         
 
         ctx.fillTextAligned(`Lives: ${this.lives}`, this.width - MARGIN, MARGIN, TextAlign.Right)
-       // if(DEBUG) ctx.fillText(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, this.height - FONT_SIZE - MARGIN)
+        //if(DEBUG) ctx.fillText(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, this.height - FONT_SIZE - MARGIN)
     }
 }
