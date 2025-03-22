@@ -2,5 +2,5 @@
 export enum CursorType {
     Pointer = 'pointer',
     Default = 'default',
-    None = 'none',
+    Hidden = 'none',
 }
