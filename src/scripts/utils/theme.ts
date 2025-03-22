@@ -30,7 +30,7 @@ export abstract class Theme {
             "--container-shadow"
         ]
 
-        Log.info("Theme", `Setting up theme, loading ${variables.length} varibles...`)
+        Log.info("Theme", `Setting up theme, loading ${variables.length} variables...`)
         console.groupCollapsed("Loading theme variables")
 
         const style = getComputedStyle(document.body);

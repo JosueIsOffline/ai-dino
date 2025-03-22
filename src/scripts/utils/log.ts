@@ -1,3 +1,4 @@
+import "../extensions"
 export abstract class Log {
     private static logColoredText(level: string, tag: string, tagColor: string, ...args: string[]){
         console[level].call(
