@@ -81,7 +81,7 @@ export class StatePlay extends AState {
     }
 
     private updateSpeed(deltaTime: number) {
-        if (this.rawSpeed){
+        if (this.rawSpeed < 1.0) {
             // Accelerate the whole game
             // Bro I don't want a new variable to track the elapsed time, since this will be only used on the ramp-up phase
             // I'll just use the deltaTime variable
@@ -112,7 +112,8 @@ export class StatePlay extends AState {
         ctx.textBaseline = "top"
         
 
-        ctx.fillTextAligned(`Lives: ${this.lives}`, this.width - MARGIN, MARGIN, TextAlign.Right)
-        //if(DEBUG) ctx.fillText(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, this.height - FONT_SIZE - MARGIN)
+        ctx.fillTextAligned(`Lives: ${this.lives}`, this.width - MARGIN, MARGIN + FONT_SIZE / 2.5, TextAlign.Right)
+        ctx.fillTextAligned(`Score: ${this.score}`, this.width - MARGIN, MARGIN, TextAlign.Right)
+        if(DEBUG) ctx.fillText(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, this.height - FONT_SIZE - MARGIN)
     }
 }
