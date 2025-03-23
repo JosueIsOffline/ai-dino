@@ -6,7 +6,7 @@ import { SpriteSheet } from "../utils/spritesheet";
 export class Ground extends AEntity {
     constructor(private state: StatePlay) {
         super();
-        this.velocity.x = -BASE_MOVE_SPEED;
+        this.velocity.x =  BASE_MOVE_SPEED;
     }
 
     public update(deltaTime: number): void {
@@ -14,30 +14,37 @@ export class Ground extends AEntity {
         if(this.position.x >= SpriteSheet.ground.width) this.position.x -= SpriteSheet.ground.width;
     }
 
-    public render(ctx: CanvasRenderingContext2D): void {   
+    public render(ctx: CanvasRenderingContext2D): void {
+        // First part of the ground
+        const visibleWidth = Math.min(SpriteSheet.ground.width - this.position.x, this.state.width);
+        
         ctx.drawImage(
             SpriteSheet.source,
             SpriteSheet.ground.x + this.position.x,
             SpriteSheet.ground.y,
-            this.state.width,
+            visibleWidth,
             SpriteSheet.ground.height,
-            0, this.state.height - SpriteSheet.ground.height,
-            this.state.width, SpriteSheet.ground.height
-        )
-
-        // Loop the ground texture, if necesary
-        if(this.position.x + this.state.width > SpriteSheet.ground.width){
+            0, 
+            this.state.height - SpriteSheet.ground.height,
+            visibleWidth, 
+            SpriteSheet.ground.height
+        );
+        
+        // Second part of the ground (looping)
+        if(visibleWidth < this.state.width) {
+            const remainingWidth = this.state.width - visibleWidth;
+            
             ctx.drawImage(
                 SpriteSheet.source,
                 SpriteSheet.ground.x,
                 SpriteSheet.ground.y,
-                this.position.x + this.state.width - SpriteSheet.ground.width,
+                remainingWidth,
                 SpriteSheet.ground.height,
-                SpriteSheet.ground.width - this.position.x,
+                visibleWidth,
                 this.state.height - SpriteSheet.ground.height,
-                this.position.x + this.state.width - SpriteSheet.ground.width,
+                remainingWidth,
                 SpriteSheet.ground.height
-            )
+            );
         }
     }
 }
