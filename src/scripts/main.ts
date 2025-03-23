@@ -50,6 +50,8 @@ export class Main {
          window.addVisibilityChangeEventListener(this.onVisibilityChange.bind(this));
 		 window.addEventListener("resize", this.onResize.bind(this));
 
+		 InputHandler.setup(this)
+
       
 	}
 
@@ -192,8 +194,8 @@ export class Main {
 
 		const dt = deltaTime / SIMULATION_SUBSTEPS;
 		for (let i = 0; i < SIMULATION_SUBSTEPS; i++) {
-			// this.state.update
-			// InputHandle.update()
+			this.state.update(dt)
+			InputHandler.update()
 			// if(DEBUG) this.analitics.endUpdate()
 		}
 
@@ -211,6 +213,7 @@ export class Main {
 			this.canvas.clear()
 
 			this.state.render(this.canvas.context);
+			this.isDirty = false;
 		}
 
 		this.requestNextFrame();
