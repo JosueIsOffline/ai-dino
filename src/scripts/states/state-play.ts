@@ -94,7 +94,7 @@ export class StatePlay extends AState {
     async update(deltaTime: number) {
         this.updateScore(deltaTime)
         this.updateSpeed(deltaTime)
-        this.ground.update(deltaTime)
+        //this.ground.update(deltaTime)
         this.dino.update(deltaTime)
 
 
@@ -114,6 +114,7 @@ export class StatePlay extends AState {
 
         ctx.fillTextAligned(`Lives: ${this.lives}`, this.width - MARGIN, MARGIN + FONT_SIZE / 2.5, TextAlign.Right)
         ctx.fillTextAligned(`Score: ${this.score}`, this.width - MARGIN, MARGIN, TextAlign.Right)
-        if(DEBUG) ctx.fillText(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, this.height - FONT_SIZE - MARGIN)
+        if(DEBUG) ctx.fillTextAligned(`rawSpeed: ${this.rawSpeed.toFixed(2)}`, this.width / 2, MARGIN, TextAlign.Center)   
+        
     }
 }
