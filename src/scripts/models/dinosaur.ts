@@ -15,6 +15,7 @@ import { SpriteSheet } from "../utils/spritesheet";
 import { Log } from "../utils/log"; 
 import { Rectangle } from "./rectangle";
 import { Theme } from "../utils/theme";
+import { InputHandler } from "../components/input-handler";
 
 export class Dinosaur extends AEntity {
 
@@ -39,7 +40,7 @@ export class Dinosaur extends AEntity {
     }
 
     public get sprite() {
-        // if(this.state instanceof StateGameOve) {
+        // if(this.state instanceof StateGameOver) {
         //     return SpriteSheet.dino4
         // }
 
@@ -63,13 +64,38 @@ export class Dinosaur extends AEntity {
 
     protected jump(scalar = 1.0) {
         if(this.isGrounded) {
-            Log.debug("Dinosaur", "Jumping...");
+            Log.debug("Dinosaur", "Jumping!");
 
             this.acceleration.y = DINO_JUMP_FORCE * scalar;
 
             // TODO: add sound effect
         }
     } 
+
+    // TODO: updateInvulnerability function
+
+    // TODO: updateInput function
+    protected updateInput() {
+        if(InputHandler.isCrounching()) {
+            if(this.isGrounded){
+                this.isCrounching = true;
+                this.position.y = this.groundHeight
+            } else {
+                this.isCrounching = false;
+                this.acceleration.y += DINO_FALL_FORCE;
+            }
+        } else {
+            this.isCrounching = false;
+
+            // Jump
+            if(this.isGrounded) {
+                if(InputHandler.isJumping()) {
+                    Log.debug("Input", "Jumping...")
+                    this.jump(DINO_REGULAR_JUMP_SCALE)
+                } 
+            }
+        }
+    }
 
     private applyConstraints() {
         if(this.position.y > this.groundHeight) {
@@ -97,6 +123,8 @@ export class Dinosaur extends AEntity {
                 this.acceleration.y = DINO_FALL_FORCE * mobileFactor;
             }
         }
+
+        this.updateInput();
 
         // Velocity Verlet integration 
         this.position.y += this.velocity.y * deltaTime + 0.5 * this.acceleration.y * Math.pow(deltaTime, 2.0);
