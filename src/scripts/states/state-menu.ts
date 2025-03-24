@@ -119,11 +119,11 @@ export class StateMenu extends AState {
 		this.updateStartGameTransition(deltaTime);
 
 		// Start game on click
-		// if (InputHandler.isDirty && !this.isJumping && !this.isTransitioningToPlay) {
-		// 	//AudioUtils.play(SoundFX.Jump);
-		// 	this.isJumping = true;
-		// 	Cursor.set(CursorType.Default);
-		// }
+		if (InputHandler.isDirty && !this.isJumping && !this.isTransitioningToPlay) {
+			//AudioUtils.play(SoundFX.Jump);
+			this.isJumping = true;
+			Cursor.set(CursorType.Default);
+		}
 
 		this.invalidate();
 	}
@@ -146,16 +146,16 @@ export class StateMenu extends AState {
 		} else if (transitionProgress > 0 && transitionProgress < 1.0) {// Moonwalk
 			sprite = Math.floor(transitionProgress * 10) % 3 <= 1 ? SpriteSheet.dino3 : SpriteSheet.dino2;
 		} else {
-			// if (transitionProgress < 1.0 && bounds.contains(InputHandler.mouse)) {// Crouch when move hover
-			// 	if (InputHandler.mouse.y < bounds.y + bounds.height / 2) {
-			// 		sprite = SpriteSheet.dinoCrouch1;
-			// 		bounds.y = this.height - SpriteSheet.ground.height - SpriteSheet.dinoCrouch1.height + SpriteSheet.groundOffset;
-			// 	} else {
-			// 		sprite = SpriteSheet.dinoCrouch2;
-			// 	}
-			// } else {// Blinking
-			// 	sprite = this.isBlinking ? SpriteSheet.dino1 : SpriteSheet.dino0;
-			// }
+			if (transitionProgress < 1.0 && bounds.contains(InputHandler.mouse)) {// Crouch when move hover
+				if (InputHandler.mouse.y < bounds.y + bounds.height / 2) {
+					sprite = SpriteSheet.dinoCrouch1;
+					bounds.y = this.height - SpriteSheet.ground.height - SpriteSheet.dinoCrouch1.height + SpriteSheet.groundOffset;
+				} else {
+					sprite = SpriteSheet.dinoCrouch2;
+				}
+			} else {// Blinking
+				sprite = this.isBlinking ? SpriteSheet.dino1 : SpriteSheet.dino0;
+			}
 
             sprite = this.isBlinking ? SpriteSheet.dino1 : SpriteSheet.dino0;
 		}
