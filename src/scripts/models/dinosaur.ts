@@ -74,6 +74,15 @@ export class Dinosaur extends AEntity {
     } 
 
     // TODO: updateInvulnerability function
+    private updateInvulnerability(deltaTime: number) {
+        if(this.state.isInvulnerable) {
+            this.state.invulnerabilityTime += deltaTime;
+            if(this.state.invulnerabilityTime >= DINO_INVULNERABILITY_DURATION) {
+                this.state.isInvulnerable = false;
+                this.state.invulnerabilityTime = 0;
+            }
+        }
+    }
 
     // TODO: updateInput function
     protected updateInput() {
@@ -109,7 +118,7 @@ export class Dinosaur extends AEntity {
     }
 
     public update(deltaTime: number): void { 
-        //this.updateInvulnerability(deltaTime);
+        this.updateInvulnerability(deltaTime);
 
         // Update sprite 
         this.spriteTimer += deltaTime * this.state.speed;
