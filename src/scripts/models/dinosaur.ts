@@ -16,6 +16,7 @@ import { Log } from "../utils/log";
 import { Rectangle } from "./rectangle";
 import { Theme } from "../utils/theme";
 import { InputHandler } from "../components/input-handler";
+import { Gizmo } from "../utils/gizmo";
 
 export class Dinosaur extends AEntity {
 
@@ -132,6 +133,9 @@ export class Dinosaur extends AEntity {
 
         this.applyConstraints();
 
+        Gizmo.circle(this.position.add(this.bounds.size.divide(2)), 5)
+        Gizmo.arrow(this.position.add(this.bounds.size.divide(2)), this.velocity.normalize().multiply(this.sprite.height / 2.0), Theme.secondary)
+
     }
 
     public render(ctx: CanvasRenderingContext2D): void {
@@ -141,5 +145,6 @@ export class Dinosaur extends AEntity {
         ctx.restore()
 
         // Debug bounding box
+        Gizmo.outline(new Rectangle(this.position.x, this.position.y, this.sprite.width, this.sprite.height), "rgba(247, 0, 255, 0.63)")
     }
 }

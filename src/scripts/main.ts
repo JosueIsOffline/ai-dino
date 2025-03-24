@@ -17,6 +17,7 @@ import { Cursor } from "./utils/cursor";
 import { AState } from "./types/state";
 import { StatePlay } from "./states/state-play";
 import { StateMenu } from "./states/state-menu";
+import { Gizmo } from "./utils/gizmo";
 
 export class Main {
 	// Graphics
@@ -214,6 +215,9 @@ export class Main {
 
 			this.state.render(this.canvas.context);
 			this.isDirty = false;
+
+			Gizmo.render(this.canvas.context);
+			Gizmo.clear();
 		}
 
 		this.requestNextFrame();
