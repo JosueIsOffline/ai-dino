@@ -18,6 +18,8 @@ import { AState } from "./types/state";
 import { StatePlay } from "./states/state-play";
 import { StateMenu } from "./states/state-menu";
 import { Gizmo } from "./utils/gizmo";
+import { Analytics } from "./models/analytics";
+import { i } from "mathjs";
 
 export class Main {
 	// Graphics
@@ -31,6 +33,7 @@ export class Main {
 
 	// Misc
 	public globalTimer = 0;
+	private analytics: Analytics;
 
 	// Game logic
 	public state: AState;
@@ -74,6 +77,12 @@ export class Main {
 				ImageUtils.setup(),
 				SpriteSheet.setup(),
 			];
+
+			// Analytics profiler, only on DEBUG
+			if(DEBUG) {
+				this.analytics = new Analytics(this)
+				modules.push(this.analytics.setup())
+			}
 
 			await Promise.all(modules);
 
@@ -197,11 +206,13 @@ export class Main {
 		for (let i = 0; i < SIMULATION_SUBSTEPS; i++) {
 			this.state.update(dt)
 			InputHandler.update()
-			// if(DEBUG) this.analitics.endUpdate()
+			 if(DEBUG) this.analytics.endUpdate()
 		}
 
 		//TODD: update clouds
+		
 
+		if(DEBUG) this.analytics.update(deltaTime)
 		this.globalTimer += deltaTime;
 	}
 
@@ -211,13 +222,18 @@ export class Main {
 
 		// Redraw canvas, if needed
 		if (this.isDirty) {
+			if(DEBUG) this.analytics.startFrame(time)
 			this.canvas.clear()
 
 			this.state.render(this.canvas.context);
 			this.isDirty = false;
 
+			// Render analytics
+			if(DEBUG) this.analytics.render(this.canvas.context)
+
 			Gizmo.render(this.canvas.context);
 			Gizmo.clear();
+			if(DEBUG) this.analytics.endFrame()
 		}
 
 		this.requestNextFrame();

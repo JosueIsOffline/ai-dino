@@ -27,7 +27,7 @@ export class StatePlay extends AState {
 	public dino: Dinosaur;
 	public obstacles: AObstacle[];
 
-    private spawner: ObstacleSpawner;
+	private spawner: ObstacleSpawner;
 
 	private scoreTimer = 0;
 	private rawSpeed = 0;
@@ -76,22 +76,30 @@ export class StatePlay extends AState {
 		this.ground = new Ground(this);
 		this.obstacles = [];
 
-        this.spawner = new ObstacleSpawner(this)
+		this.spawner = new ObstacleSpawner(this);
 
 		if (!DEBUG) Cursor.set(CursorType.Hidden);
 	}
 
-    private onHitObstacle() {
-        Log.debug("StatePlay", "Dino hit obstacle!");
-        if(this.lives > 1) {
-            this.isInvulnerable = true;
-            this.invulnerabilityTime = 0;
-            this.lives -= 1 ;
-        } else if(!GOD_MODE) {
-            AudioUtils.play(SoundFX.GameOver2)
-            this.main.setState(new StateGameOver(this.ground, this.dino, this.obstacles, this.score, this.main))
-        }
-    }
+	private onHitObstacle() {
+		Log.debug("StatePlay", "Dino hit obstacle!");
+		if (this.lives > 1) {
+			this.isInvulnerable = true;
+			this.invulnerabilityTime = 0;
+			this.lives -= 1;
+		} else if (!GOD_MODE) {
+			AudioUtils.play(SoundFX.GameOver2);
+			this.main.setState(
+				new StateGameOver(
+					this.ground,
+					this.dino,
+					this.obstacles,
+					this.score,
+					this.main,
+				),
+			);
+		}
+	}
 
 	private updateScore(deltaTime: number) {
 		this.scoreTimer += deltaTime;
@@ -124,9 +132,9 @@ export class StatePlay extends AState {
 	async update(deltaTime: number) {
 		this.updateScore(deltaTime);
 		this.updateSpeed(deltaTime);
-		 this.ground.update(deltaTime)
+		this.ground.update(deltaTime);
 		this.dino.update(deltaTime);
-        this.spawner.update(deltaTime)
+		this.spawner.update(deltaTime);
 
 		for (let i = this.obstacles.length - 1; i >= 0; i--) {
 			const obstacle = this.obstacles[i];
@@ -143,7 +151,7 @@ export class StatePlay extends AState {
 					obstacle.sprite,
 				)
 			) {
-                this.onHitObstacle()
+				this.onHitObstacle();
 			}
 		}
 
